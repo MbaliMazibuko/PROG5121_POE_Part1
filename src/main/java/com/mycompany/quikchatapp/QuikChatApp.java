@@ -1,0 +1,146 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ */
+
+package com.mycompany.quikchatapp;
+
+import java.util.Scanner;
+
+/**
+ *
+ * @author user
+ */
+public class QuikChatApp {
+    
+    private static final String[] MENU_OPTIONS = {
+            "1. Register a new account",
+            "2. Login",
+            "3. Exit"
+    };
+
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+        Login login = new Login();
+        boolean running = true;
+
+        printBanner();
+
+        while (running) {
+            printMenu();
+            System.out.print("Select an option: ");
+            String choice = input.nextLine().trim();
+
+            switch (choice) {
+                case "1":
+                    registerFlow(input, login);
+                    break;
+                case "2":
+                    loginFlow(input, login);
+                    break;
+                case "3":
+                    running = false;
+                    System.out.println("Thank you for using QuickChat. Goodbye.");
+                    break;
+                default:
+                    System.out.println("Invalid option. Please enter 1, 2 or 3.");
+                    break;
+            }
+            System.out.println();
+        }
+
+        input.close();
+    }
+
+    private static void printBanner() {
+        System.out.println("========================================");
+        System.out.println("          QUICKCHAT - PART 1");
+        System.out.println("     Registration and Login Feature");
+        System.out.println("========================================");
+        System.out.println();
+    }
+
+    private static void printMenu() {
+        for (int i = 0; i < MENU_OPTIONS.length; i++) {
+            System.out.println(MENU_OPTIONS[i]);
+        }
+    }
+
+    private static void registerFlow(Scanner input, Login login) {
+        System.out.println();
+        System.out.println("--- Create an account ---");
+
+        System.out.print("Enter first name: ");
+        String firstName = input.nextLine().trim();
+        System.out.print("Enter last name: ");
+        String lastName = input.nextLine().trim();
+
+        login.setFirstName(firstName);
+        login.setLastName(lastName);
+
+        String username = captureUntilValid(
+                input,
+                "Enter username (must contain '_' and be no more than 5 characters): ",
+                login::checkUserName,
+                login::getUsernameMessage
+        );
+
+        String password = captureUntilValid(
+                input,
+                "Enter password (min 8 chars, 1 capital, 1 number, 1 special character): ",
+                login::checkPasswordComplexity,
+                login::getPasswordMessage
+        );
+
+        String cell = captureUntilValid(
+                input,
+                "Enter South African cell number (example +27838968976): ",
+                login::checkCellPhoneNumber,
+                login::getCellPhoneMessage
+        );
+
+        String result = login.registerUser(username, password, cell);
+        System.out.println(result);
+    }
+
+    private static void loginFlow(Scanner input, Login login) {
+        System.out.println();
+        System.out.println("--- Login ---");
+
+        if (!login.isRegistered()) {
+            System.out.println("No account has been registered yet. Please register first.");
+            return;
+        }
+
+        System.out.print("Enter username: ");
+        String username = input.nextLine().trim();
+        System.out.print("Enter password: ");
+        String password = input.nextLine();
+
+        boolean success = login.loginUser(username, password);
+        System.out.println(login.returnLoginStatus(username, password));
+
+        if (success) {
+            System.out.println("Login successful: " + success);
+        }
+    }
+
+    private static String captureUntilValid(Scanner input,
+                                            String prompt,
+                                            java.util.function.Predicate<String> checker,
+                                            java.util.function.Function<String, String> messenger) {
+        String value;
+        while (true) {
+            System.out.print(prompt);
+            value = input.nextLine().trim();
+            System.out.println(messenger.apply(value));
+            if (checker.test(value)) {
+                return value;
+            }
+        }
+    }
+}
+
+   
+
+
+
