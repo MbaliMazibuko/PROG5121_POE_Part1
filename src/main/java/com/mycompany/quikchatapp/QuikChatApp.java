@@ -91,7 +91,7 @@ public class QuikChatApp {
                 login::getPasswordMessage
         );
 
-        String cell = captureUntilValid(//Cell number must start with +27 and be 12 characters long
+        String cell = captureUntilValid(//Cell number must start with +27 and be 12 characters long.
                 input,
                 "Enter South African cell number (example +27838968976): ",
                 login::checkCellPhoneNumber,
