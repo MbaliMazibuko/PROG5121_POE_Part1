@@ -197,7 +197,7 @@ public class Login {
         return firstName + " " + lastName;
     }
     public boolean isLoggedIn() {
-        return loggedIn;
+        return loggedIn ;
     }
 }
 
