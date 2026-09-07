@@ -84,7 +84,7 @@ public class QuikChatApp {
                 login::getUsernameMessage
         );
 
-        String password = captureUntilValid(
+        String password = captureUntilValid(//Password must have 8 character,a capital letter, a number and special character
                 input,
                 "Enter password (min 8 chars, 1 capital, 1 number, 1 special character): ",
                 login::checkPasswordComplexity,
