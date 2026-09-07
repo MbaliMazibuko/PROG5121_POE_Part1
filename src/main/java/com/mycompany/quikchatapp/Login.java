@@ -29,6 +29,7 @@ public class Login {
     private String registeredPassword;
     private String registeredCellPhone;
     private boolean registered;
+    private boolean loggedIn;
 
     private static final String SPECIAL_CHARACTERS = "!@#$%^&*()_+-=[]{}|;:'\",.<>?/`~\\";
 
@@ -39,6 +40,7 @@ public class Login {
         this.registeredPassword = "";
         this.registeredCellPhone = "";
         this.registered = false;
+        this.loggedIn = false;
     }
 
     public Login(String firstName, String lastName) {
@@ -178,9 +180,11 @@ public class Login {
 
     public boolean loginUser(String username, String password) {
         if (!registered || username == null || password == null) {
+            loggedIn = false;
             return false;
         }
-        return registeredUsername.equals(username) && registeredPassword.equals(password);
+        loggedIn = registeredUsername.equals(username) && registeredPassword.equals(password);
+        return loggedIn;
     }
 
     public String returnLoginStatus(String username, String password) {
@@ -191,6 +195,9 @@ public class Login {
     }
     public String getFullName() {
         return firstName + " " + lastName;
+    }
+    public boolean isLoggedIn() {
+        return loggedIn;
     }
 }
 
