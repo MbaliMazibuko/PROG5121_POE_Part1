@@ -17,6 +17,10 @@ import static org.junit.Assert.assertTrue;
  *
  * @author user
  */
+
+
+//JUnit 4 tests use the official test data fromthe brief
+
 public class LoginTest {
      private Login login;
 
