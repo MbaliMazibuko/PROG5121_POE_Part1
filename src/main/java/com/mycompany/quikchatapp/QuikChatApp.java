@@ -68,14 +68,19 @@ public class QuikChatApp {
     private static void registerFlow(Scanner input, Login login) {
         System.out.println();
         System.out.println("--- Create an account ---");
-
-        System.out.print("Enter first name: ");
+System.out.print("Enter first name: ");
         String firstName = input.nextLine().trim();
+        while (firstName.equals("")) {
+            System.out.print("First name cannot be empty. Enter first name: ");
+            firstName = input.nextLine().trim();
+        }
+
         System.out.print("Enter last name: ");
         String lastName = input.nextLine().trim();
-
-        login.setFirstName(firstName);
-        login.setLastName(lastName);
+        while (lastName.equals("")) {
+            System.out.print("Last name cannot be empty. Enter last name: ");
+            lastName = input.nextLine().trim();
+        }
 
         String username = captureUntilValid(
                 input,
