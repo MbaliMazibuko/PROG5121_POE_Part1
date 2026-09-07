@@ -120,7 +120,7 @@ public class QuikChatApp {
         System.out.println(login.returnLoginStatus(username, password));
 
         if (success) {
-            System.out.println("Login successful: " + success);
+            System.out.println("Login successful: " + login.getFullName());
         }
     }
 
